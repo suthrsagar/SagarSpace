@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { PlusCircle, Upload, Save, X, FileBadge } from 'lucide-react';
+import { PlusCircle, Upload, Save, X, FileBadge, MessageSquare } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const [apps, setApps] = useState([]);
+  const [feedbacks, setFeedbacks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editingId, setEditingId] = useState(null);
@@ -24,6 +26,7 @@ export default function AdminDashboard() {
       return;
     }
     fetchApps();
+    fetchFeedbacks();
   }, [navigate, token]);
 
   const fetchApps = async () => {
@@ -34,6 +37,17 @@ export default function AdminDashboard() {
       console.error(error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchFeedbacks = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/admin/feedback', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      setFeedbacks(response.data);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -103,7 +117,34 @@ export default function AdminDashboard() {
     }
   };
 
-  if (loading) return <div className="text-center py-20"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500 mx-auto"></div></div>;
+  if (loading) return (
+      <div className="flex flex-col justify-center items-center h-64 gap-6">
+        <div className="relative w-20 h-20">
+          <motion.div 
+            animate={{ rotate: 360 }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-0 rounded-full border-t-2 border-r-2 border-purple-500 shadow-[0_0_15px_#A855F750]"
+          />
+          <motion.div 
+            animate={{ rotate: -360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-2 rounded-full border-b-2 border-l-2 border-blue-500 shadow-[0_0_15px_#3B82F650]"
+          />
+          <motion.div 
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute inset-6 bg-gradient-to-tr from-purple-500 to-blue-500 rounded-full opacity-50 blur-[4px]"
+          />
+        </div>
+        <motion.p
+          animate={{ opacity: [0.3, 1, 0.3] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="text-gray-400 font-bold tracking-[0.3em] text-sm"
+        >
+          CONNECTING...
+        </motion.p>
+      </div>
+  );
 
   return (
     <div className="space-y-8">
@@ -182,6 +223,43 @@ export default function AdminDashboard() {
               )}
             </tbody>
           </table>
+        </div>
+      </div>
+
+      {/* Global Feedback Section */}
+      <div className="bg-[#1A1F26] rounded-[2rem] border border-gray-800 shadow-2xl p-6 relative overflow-hidden mt-8">
+        <div className="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-pink-500 rounded-full mix-blend-screen filter blur-[80px] opacity-10 pointer-events-none"></div>
+        <div className="flex justify-between items-center mb-8 relative z-10">
+          <div className="flex items-center gap-3">
+            <div className="bg-pink-500/10 p-3 rounded-xl border border-pink-500/20">
+              <MessageSquare size={24} className="text-pink-400" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-black text-white tracking-tight">Global Feedback</h2>
+              <p className="text-sm font-medium text-gray-400">User comments from the footer.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {feedbacks.map((fb) => (
+            <div key={fb._id} className="bg-gray-800/50 p-4 rounded-xl border border-gray-700/50 hover:border-gray-600 transition-colors">
+              <div className="flex justify-between items-start mb-2">
+                <span className="font-bold text-gray-200 text-sm flex items-center gap-2">
+                  <div className="w-6 h-6 bg-pink-500/20 rounded-full flex items-center justify-center text-pink-400 text-xs">{fb.name.charAt(0).toUpperCase()}</div>
+                  {fb.name}
+                </span>
+                <span className="text-xs text-gray-500">{new Date(fb.createdAt).toLocaleDateString()}</span>
+              </div>
+              <p className="text-gray-300 text-sm leading-relaxed">{fb.message}</p>
+            </div>
+          ))}
+          {feedbacks.length === 0 && (
+            <div className="col-span-1 md:col-span-2 p-10 text-center flex flex-col items-center justify-center">
+              <MessageSquare size={32} className="text-gray-600 mb-3" />
+              <p className="text-gray-500 font-medium">No feedback received yet.</p>
+            </div>
+          )}
         </div>
       </div>
 

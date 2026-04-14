@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Download, Info, Clock, HardDrive, Smartphone } from 'lucide-react';
+import { Download, Info, Clock, HardDrive, Smartphone, MessageSquare, Send } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const GithubIcon = ({ size = 24, className = "" }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className} stroke="none">
@@ -13,6 +14,9 @@ export default function AppDetail() {
   const { id } = useParams();
   const [app, setApp] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [commentUser, setCommentUser] = useState('');
+  const [commentText, setCommentText] = useState('');
+  const [submittingComment, setSubmittingComment] = useState(false);
 
   useEffect(() => {
     const fetchApp = async () => {
@@ -28,10 +32,52 @@ export default function AppDetail() {
     fetchApp();
   }, [id]);
 
+  const submitComment = async (e) => {
+    e.preventDefault();
+    if (!commentUser.trim() || !commentText.trim()) return;
+    
+    setSubmittingComment(true);
+    try {
+      const response = await axios.post(`http://localhost:5000/api/apps/${id}/comment`, {
+        user: commentUser,
+        text: commentText
+      });
+      setApp(response.data);
+      setCommentText(''); // Clear text input after success
+    } catch (error) {
+      console.error('Error submitting comment:', error);
+    } finally {
+      setSubmittingComment(false);
+    }
+  };
+
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
+      <div className="flex flex-col justify-center items-center h-64 gap-6">
+        <div className="relative w-20 h-20">
+          <motion.div 
+            animate={{ rotate: 360 }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-0 rounded-full border-t-2 border-r-2 border-blue-500 shadow-[0_0_15px_#3B82F650]"
+          />
+          <motion.div 
+            animate={{ rotate: -360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-2 rounded-full border-b-2 border-l-2 border-pink-500 shadow-[0_0_15px_#EC489950]"
+          />
+          <motion.div 
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute inset-6 bg-gradient-to-tr from-blue-500 to-pink-500 rounded-full opacity-50 blur-[4px]"
+          />
+        </div>
+        <motion.p
+          animate={{ opacity: [0.3, 1, 0.3] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="text-gray-400 font-bold tracking-[0.3em] text-sm"
+        >
+          LOADING DATA...
+        </motion.p>
       </div>
     );
   }
@@ -99,6 +145,57 @@ export default function AppDetail() {
             <p className="text-gray-300 whitespace-pre-line leading-relaxed">
               {app.changelog || 'No changelog provided for this version.'}
             </p>
+          </section>
+
+          <section className="bg-gray-800/50 p-6 rounded-2xl border border-gray-700/50 mt-6">
+            <div className="flex items-center space-x-2 mb-6 text-white">
+              <MessageSquare size={20} className="text-pink-400" />
+              <h2 className="text-xl font-bold">Comments & Reviews</h2>
+            </div>
+            
+            <div className="space-y-4 mb-6 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+              {app.comments && app.comments.length > 0 ? (
+                app.comments.map((comment, index) => (
+                  <div key={index} className="bg-[#1A1F26] p-4 rounded-xl border border-gray-700/50">
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="font-bold text-gray-200">{comment.user}</span>
+                      <span className="text-xs text-gray-500">{new Date(comment.createdAt).toLocaleDateString()}</span>
+                    </div>
+                    <p className="text-gray-400 text-sm leading-relaxed">{comment.text}</p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500 text-sm italic">No comments yet. Be the first to review!</p>
+              )}
+            </div>
+
+            <form onSubmit={submitComment} className="flex flex-col gap-3 pt-4 border-t border-gray-700/50">
+              <input 
+                type="text" 
+                placeholder="Your Name" 
+                value={commentUser}
+                onChange={(e) => setCommentUser(e.target.value)}
+                className="bg-gray-900 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+                required
+              />
+              <div className="flex gap-2">
+                <input 
+                  type="text" 
+                  placeholder="Write a comment..." 
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                  className="flex-1 bg-gray-900 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+                  required
+                />
+                <button 
+                  type="submit" 
+                  disabled={submittingComment}
+                  className="bg-blue-600 hover:bg-blue-500 text-white p-3 md:px-5 rounded-xl font-bold flex items-center justify-center transition-colors disabled:opacity-50"
+                >
+                  {submittingComment ? <div className="w-5 h-5 border-2 border-white/50 border-t-white rounded-full animate-spin"></div> : <Send size={18} />}
+                </button>
+              </div>
+            </form>
           </section>
         </div>
 

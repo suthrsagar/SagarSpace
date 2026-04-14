@@ -110,7 +110,7 @@ export default function Home() {
       <div className="absolute top-[20%] right-[-5%] w-80 h-80 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none" style={{ animation: 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}></div>
 
       {/* Portfolio Hero Section */}
-      <section className="flex flex-col-reverse md:flex-row items-center justify-between gap-16 pt-12 relative z-10">
+      <section className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-16 pt-8 md:pt-12 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -125,14 +125,14 @@ export default function Home() {
             Welcome to SagarSpace
           </motion.div>
           
-          <div className="space-y-2">
-            <h1 className="text-6xl md:text-7xl font-black text-white leading-tight tracking-tight">
+          <div className="space-y-1 md:space-y-2">
+            <h1 className="text-5xl md:text-7xl font-black text-white leading-tight tracking-tight text-center md:text-left">
               Hi, I'm <br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-emerald-400 to-blue-500 hover:tracking-widest transition-all duration-500">
                 Sagar
               </span>
             </h1>
-            <div className="text-2xl md:text-3xl text-gray-400 font-light flex items-center gap-2">
+            <div className="text-xl md:text-3xl text-gray-400 font-light flex items-center justify-center md:justify-start gap-2">
               Building 
               <span className="font-bold text-white relative w-48 overflow-hidden h-10 inline-block align-bottom">
                 <AnimatePresence mode="popLayout">
@@ -151,7 +151,7 @@ export default function Home() {
             </div>
           </div>
 
-          <p className="text-lg text-gray-400 leading-relaxed max-w-xl">
+          <p className="text-base md:text-lg text-gray-400 leading-relaxed max-w-xl text-center md:text-left mx-auto md:mx-0">
             Currently pursuing <strong className="text-white">BCA from JNVU</strong>. 
             I transform ideas into interactive realities through code and design.
           </p>
@@ -228,7 +228,7 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
-          className="relative w-72 h-72 md:w-96 md:h-96 flex-shrink-0"
+          className="relative w-64 h-64 md:w-96 md:h-96 flex-shrink-0 mx-auto md:mx-0 mt-8 md:mt-0"
         >
           {/* Animated Glow Rings */}
           <motion.div 
@@ -261,7 +261,7 @@ export default function Home() {
       </section>
 
       {/* Connect & Socials Section */}
-      <section className="pt-24 relative z-10 px-4 md:px-0 pb-10">
+      <section id="connect" className="pt-24 relative z-10 px-4 md:px-0 pb-10">
         <motion.div 
            initial={{ opacity: 0, scale: 0.95, y: 30 }}
            whileInView={{ opacity: 1, scale: 1, y: 0 }}
@@ -273,19 +273,19 @@ export default function Home() {
           <div className="absolute bottom-0 left-0 -mb-16 -ml-16 w-64 h-64 bg-green-600 rounded-full mix-blend-screen filter blur-[80px] opacity-10 pointer-events-none"></div>
           
           <div className="flex-1 text-center md:text-left z-10 w-full">
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-4 tracking-tight">
               Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400">Connect</span>
             </h2>
-            <p className="text-gray-400 text-lg mb-8 max-w-lg mx-auto md:mx-0">
+            <p className="text-gray-400 text-sm md:text-lg mb-8 max-w-lg mx-auto md:mx-0">
               I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-              <a href="mailto:sutharsagar710@gmail.com" className="flex items-center justify-center gap-3 bg-white text-gray-900 px-6 py-4 rounded-2xl font-black transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=sutharsagar710@gmail.com" target="_blank" rel="noreferrer" className="flex items-center justify-center gap-3 bg-white text-gray-900 px-5 md:px-6 py-3.5 md:py-4 rounded-2xl font-black transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.2)] text-sm md:text-base">
                 <Mail size={20} />
                 sutharsagar710@gmail.com
               </a>
-              <button className="flex items-center justify-center gap-3 bg-gray-800 text-white border border-gray-700 hover:border-gray-500 hover:bg-gray-700 px-6 py-4 rounded-2xl font-bold transition-all hover:scale-105 active:scale-95 shadow-lg group">
+              <button className="flex items-center justify-center gap-3 bg-gray-800 text-white border border-gray-700 hover:border-gray-500 hover:bg-gray-700 px-5 md:px-6 py-3.5 md:py-4 rounded-2xl font-bold transition-all hover:scale-105 active:scale-95 shadow-lg group text-sm md:text-base">
                 <FileText size={20} className="text-gray-400 group-hover:text-white transition-colors" />
                 Resume
                 <Download size={16} className="opacity-50" />
@@ -311,12 +311,15 @@ export default function Home() {
 
             <a href="https://github.com/suthrsagar" target="_blank" rel="noreferrer" className="group flex items-center justify-between p-4 rounded-2xl bg-[#0D1117] border border-gray-800 hover:border-gray-500 hover:bg-gray-900 transition-all shadow-lg">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-[14px] bg-gray-800 border border-gray-700 flex items-center justify-center shadow-inner group-hover:bg-gray-700 transition-colors">
-                  <GithubIcon size={24} className="text-white" />
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-[14px] bg-gray-800 border border-gray-700 flex items-center justify-center shadow-inner group-hover:bg-gray-700 transition-colors">
+                  <GithubIcon size={20} className="text-white" />
                 </div>
-                <div className="text-left">
-                  <p className="text-white font-bold text-base group-hover:text-gray-200 transition-colors">GitHub</p>
-                  <p className="text-gray-500 text-xs font-mono">@suthrsagar</p>
+                <div className="text-left hidden sm:block">
+                  <p className="text-white font-bold text-sm md:text-base group-hover:text-gray-200 transition-colors">GitHub</p>
+                  <p className="text-gray-500 text-[10px] md:text-xs font-mono">@suthrsagar</p>
+                </div>
+                <div className="text-left sm:hidden">
+                  <p className="text-white font-bold text-sm group-hover:text-gray-200 transition-colors">@suthrsagar</p>
                 </div>
               </div>
               <ExternalLink size={18} className="text-gray-600 group-hover:text-white transition-colors" />
@@ -326,7 +329,7 @@ export default function Home() {
       </section>
 
       {/* Projects Section */}
-      <section className="pt-10 relative z-10 pb-20">
+      <section id="projects" className="pt-10 relative z-10 pb-20">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[500px] bg-green-500/5 rounded-full blur-[120px] pointer-events-none"></div>
         
         <motion.div 
@@ -347,7 +350,7 @@ export default function Home() {
             <p className="text-gray-400 text-lg">Explore my latest creations, games, and responsive applications.</p>
           </div>
           
-          <div className="flex p-1 bg-gray-900/80 rounded-2xl border border-gray-700/50 shadow-2xl backdrop-blur-md">
+        <div className="flex p-1 bg-gray-900/80 rounded-2xl border border-gray-700/50 shadow-2xl backdrop-blur-md overflow-x-auto max-w-full">
             {['All', 'App', 'Game'].map((tab) => {
               const count = tab === 'All' ? apps.length : apps.filter(a => a.category === tab).length;
               return (
@@ -376,12 +379,31 @@ export default function Home() {
         </motion.div>
 
         {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              className="rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"
-            />
+          <div className="flex flex-col justify-center items-center h-64 gap-6">
+            <div className="relative w-20 h-20">
+              <motion.div 
+                animate={{ rotate: 360 }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 rounded-full border-t-2 border-r-2 border-green-500 shadow-[0_0_15px_#10B98150]"
+              />
+              <motion.div 
+                animate={{ rotate: -360 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-2 rounded-full border-b-2 border-l-2 border-blue-500 shadow-[0_0_15px_#3B82F650]"
+              />
+              <motion.div 
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-6 bg-gradient-to-tr from-green-500 to-blue-500 rounded-full opacity-50 blur-[4px]"
+              />
+            </div>
+            <motion.p
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="text-gray-400 font-bold tracking-[0.3em] text-sm"
+            >
+              INITIALIZING...
+            </motion.p>
           </div>
         ) : filteredApps.length === 0 ? (
           <motion.div 
@@ -450,10 +472,10 @@ export default function Home() {
                         {app.changelog || 'Discover this amazing application. Click to view more details, check out features, and download the latest version in high speed.'}
                       </p>
                       
-                      <div className="flex items-center justify-center md:justify-start border-t border-gray-800/80 pt-6 mt-auto gap-4">
-                        <div className="flex items-center gap-2 text-sm font-bold text-gray-300 bg-gray-900/80 px-4 py-2.5 rounded-xl border border-gray-700/80 shadow-inner group-hover:border-gray-600 transition-colors">
-                          <Download size={18} className="text-blue-500 drop-shadow" />
-                          <span><strong className="text-white text-base mr-1">{app.downloads || 0}</strong> Downloads</span>
+                      <div className="flex flex-wrap items-center justify-center md:justify-start border-t border-gray-800/80 pt-6 mt-auto gap-3 md:gap-4">
+                        <div className="flex items-center gap-2 text-xs md:text-sm font-bold text-gray-300 bg-gray-900/80 px-3 md:px-4 py-2 md:py-2.5 rounded-xl border border-gray-700/80 shadow-inner group-hover:border-gray-600 transition-colors flex-1 md:flex-none justify-center">
+                          <Download size={16} className="text-blue-500 drop-shadow" />
+                          <span><strong className="text-white text-sm md:text-base mr-1">{app.downloads || 0}</strong> Downloads</span>
                         </div>
                         {app.githubLink && (
                           <button 
@@ -462,10 +484,10 @@ export default function Home() {
                               e.stopPropagation(); 
                               window.open(app.githubLink, '_blank'); 
                             }} 
-                            className="flex items-center gap-2 text-sm font-bold text-gray-300 bg-[#0D1117] hover:bg-gray-800 hover:text-white px-4 py-2.5 rounded-xl border border-gray-700/80 shadow-lg transition-colors cursor-pointer hover:border-gray-500 z-20 relative"
+                            className="flex items-center justify-center gap-2 text-xs md:text-sm font-bold text-gray-300 bg-[#0D1117] hover:bg-gray-800 hover:text-white px-3 md:px-4 py-2 md:py-2.5 rounded-xl border border-gray-700/80 shadow-lg transition-colors cursor-pointer hover:border-gray-500 z-20 relative flex-1 md:flex-none"
                           >
-                            <GithubIcon size={18} className="text-white" />
-                            <span className="hidden sm:inline">Source Code</span>
+                            <GithubIcon size={16} className="text-white" />
+                            <span>Source Code</span>
                           </button>
                         )}
                       </div>
